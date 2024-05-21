@@ -19,7 +19,7 @@ const createProduct = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(400).json({
       success: false,
-      message: error.message || 'Product created failed !',
+      message: 'Product created failed !',
       error: error,
     });
   }
@@ -42,7 +42,7 @@ const getAllProduct = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(400).json({
       success: false,
-      message: error.message || 'Failed to fetched all products!',
+      message: 'Failed to fetched all products!',
       error: error,
     });
   }
@@ -62,7 +62,7 @@ const getSingleProduct = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(400).json({
       success: false,
-      message: error.message || 'Product not found !',
+      message: 'Product not found !',
       error: error,
     });
   }
@@ -94,7 +94,7 @@ const updateProduct = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(400).json({
       success: false,
-      message: error.message || 'Product updated failed',
+      message: 'Product updated failed',
       error: error,
     });
   }
@@ -114,7 +114,7 @@ const deleteProduct = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(400).json({
       success: false,
-      message: error.message || 'Product not found !',
+      message: 'Product not found !',
       error: error,
     });
   }
