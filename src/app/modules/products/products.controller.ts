@@ -42,7 +42,6 @@ const getAllProduct = async (req: Request, res: Response) => {
       message: error.message || 'Something went wrong !',
       error: error,
     });
-    console.log(error);
   }
 };
 
@@ -60,7 +59,39 @@ const getSingleProduct = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(400).json({
       success: false,
-      message: error.message || 'Something went wrong !',
+      message: error.message || 'Product not found !',
+      error: error,
+    });
+  }
+};
+
+// update product
+const updateProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const productInfo = req.body;
+    const zodValidationProductData = productValidationSchema.parse(productInfo);
+    const product = await productService.getSingleProductFromDB(productId);
+    if (!product) {
+      return res.status(400).json({
+        success: false,
+        message: 'Product not found !',
+      });
+    }
+    const result = await productService.updateProductById(
+      productId,
+      zodValidationProductData,
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: 'Product updated successfully!',
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message || 'Product updated failed',
       error: error,
     });
     console.log(error);
@@ -71,4 +102,5 @@ export const productsController = {
   createProduct,
   getAllProduct,
   getSingleProduct,
+  updateProduct,
 };
