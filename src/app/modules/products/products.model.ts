@@ -19,6 +19,7 @@ const inventorySchema = new Schema<TInventory>({
   },
   inStock: {
     type: Boolean,
+    default: true,
     required: [true, 'InStock is required'],
   },
 });

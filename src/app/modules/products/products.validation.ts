@@ -7,7 +7,7 @@ const variantsValidationSchema = z.object({
 
 const inventoryValidationSchema = z.object({
   quantity: z.number(),
-  inStock: z.boolean(),
+  inStock: z.boolean().default(true),
 });
 
 const productValidationSchema = z.object({
