@@ -1,6 +1,6 @@
 export type TVariants = {
   type: string;
-  color: string;
+  value: string;
 };
 
 export type TInventory = {

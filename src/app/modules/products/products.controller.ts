@@ -1,13 +1,39 @@
 import { Request, Response } from 'express';
 import { productService } from './products.service';
+import productValidationSchema from './products.validation';
 
+// create product
 const createProduct = async (req: Request, res: Response) => {
   try {
-    const { product: productData } = req.body;
-    const result = await productService.createProductFromDB(productData);
-    res.status(200).json({
+    const productData = req.body;
+    const zodValidationProductData = productValidationSchema.parse(productData);
+    const result = await productService.createProductFromDB(
+      zodValidationProductData,
+    );
+
+    return res.status(201).json({
       success: true,
-      message: ' Get all products successfully',
+      message: 'Product created successfully!',
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message || 'Something went wrong !',
+      error: error,
+    });
+    console.log(error);
+  }
+};
+
+// get all products
+const getAllProduct = async (req: Request, res: Response) => {
+  try {
+    const result = await productService.getAllProductFromDB();
+
+    return res.status(200).json({
+      success: true,
+      message: 'Products fetched successfully!',
       data: result,
     });
   } catch (error: any) {
@@ -22,4 +48,5 @@ const createProduct = async (req: Request, res: Response) => {
 
 export const productsController = {
   createProduct,
+  getAllProduct,
 };
