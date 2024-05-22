@@ -29,7 +29,8 @@ const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 message: 'Order not found!',
             });
         }
-        if (!product.inventory.inStock) {
+        if (!product.inventory.inStock ||
+            (product === null || product === void 0 ? void 0 : product.inventory.quantity) < (OrderData === null || OrderData === void 0 ? void 0 : OrderData.quantity)) {
             return res.status(400).json({
                 success: false,
                 message: 'Insufficient quantity available in inventory',

@@ -39,7 +39,8 @@ ordersSchema.pre('save', function (next) {
         if (!product) {
             throw new Error('Product not found');
         }
-        if ((product === null || product === void 0 ? void 0 : product.inventory.quantity) < orderedQuantity) {
+        if (!product.inventory.inStock ||
+            (product === null || product === void 0 ? void 0 : product.inventory.quantity) < orderedQuantity) {
             throw new Error('Insufficient quantity available in inventory');
         }
         product.inventory.quantity -= orderedQuantity;
