@@ -1,4 +1,4 @@
-import { Schema, model, connect } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { TOder } from './orders.interface';
 import { productsModel } from '../products/products.model';
 const ordersSchema = new Schema<TOder>({
@@ -24,25 +24,22 @@ const ordersSchema = new Schema<TOder>({
 ordersSchema.pre('save', async function (next) {
   const productId = this.productId;
   const orderedQuantity = this.quantity;
-  try {
-    const product = await productsModel.findById(productId);
 
-    if (!product) {
-      throw new Error('Product not found');
-    }
+  const product = await productsModel.findById(productId);
 
-    if (product?.inventory.quantity < orderedQuantity) {
-      throw new Error('Insufficient quantity available in inventory');
-    }
-
-    product.inventory.quantity -= orderedQuantity;
-    product.inventory.inStock = product.inventory.quantity > 0;
-
-    await product.save();
-    next();
-  } catch (error) {
-    throw error;
+  if (!product) {
+    throw new Error('Product not found');
   }
+
+  if (product?.inventory.quantity < orderedQuantity) {
+    throw new Error('Insufficient quantity available in inventory');
+  }
+
+  product.inventory.quantity -= orderedQuantity;
+  product.inventory.inStock = product.inventory.quantity > 0;
+
+  await product.save();
+  next();
 });
 
 export const ordersModel = model<TOder>('orders', ordersSchema);

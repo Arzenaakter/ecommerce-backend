@@ -31,7 +31,7 @@ const createOrder = async (req: Request, res: Response) => {
       message: 'Order created successfully!',
       data: result,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(400).json({
       success: false,
       message: 'Order created failed !',
@@ -54,7 +54,7 @@ const getOrder = async (req: Request, res: Response) => {
         : 'Orders fetched successfully!',
       data: result,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(400).json({
       success: false,
       message: 'Failed to fetched orders!',

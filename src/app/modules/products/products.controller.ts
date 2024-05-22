@@ -16,7 +16,7 @@ const createProduct = async (req: Request, res: Response) => {
       message: 'Product created successfully!',
       data: result,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(400).json({
       success: false,
       message: 'Product created failed !',
@@ -39,7 +39,7 @@ const getAllProduct = async (req: Request, res: Response) => {
         : 'Products fetched successfully!',
       data: result,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(400).json({
       success: false,
       message: 'Failed to fetched all products!',
@@ -59,7 +59,7 @@ const getSingleProduct = async (req: Request, res: Response) => {
       message: 'Product fetched successfully!',
       data: result,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(400).json({
       success: false,
       message: 'Product not found !',
@@ -91,7 +91,7 @@ const updateProduct = async (req: Request, res: Response) => {
       message: 'Product updated successfully!',
       data: result,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(400).json({
       success: false,
       message: 'Product updated failed',
@@ -111,7 +111,7 @@ const deleteProduct = async (req: Request, res: Response) => {
       message: 'Product deleted successfully!',
       data: result,
     });
-  } catch (error: any) {
+  } catch (error) {
     res.status(400).json({
       success: false,
       message: 'Product not found !',
