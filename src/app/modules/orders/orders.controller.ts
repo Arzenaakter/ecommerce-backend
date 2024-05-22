@@ -7,6 +7,7 @@ import { productsModel } from '../products/products.model';
 const createOrder = async (req: Request, res: Response) => {
   try {
     const OrderData = req.body;
+
     const zodValidation = ordersValidationSchema.parse(OrderData);
 
     // Check if the product exists and is in stock
@@ -19,7 +20,10 @@ const createOrder = async (req: Request, res: Response) => {
       });
     }
 
-    if (!product.inventory.inStock) {
+    if (
+      !product.inventory.inStock ||
+      product?.inventory.quantity < OrderData?.quantity
+    ) {
       return res.status(400).json({
         success: false,
         message: 'Insufficient quantity available in inventory',

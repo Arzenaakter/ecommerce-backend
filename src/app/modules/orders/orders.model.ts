@@ -31,7 +31,10 @@ ordersSchema.pre('save', async function (next) {
     throw new Error('Product not found');
   }
 
-  if (product?.inventory.quantity < orderedQuantity) {
+  if (
+    !product.inventory.inStock ||
+    product?.inventory.quantity < orderedQuantity
+  ) {
     throw new Error('Insufficient quantity available in inventory');
   }
 
