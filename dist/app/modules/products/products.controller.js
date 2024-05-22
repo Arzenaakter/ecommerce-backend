@@ -61,16 +61,24 @@ const getSingleProduct = (req, res) => __awaiter(void 0, void 0, void 0, functio
     try {
         const { productId } = req.params;
         const result = yield products_service_1.productService.getSingleProductFromDB(productId);
-        return res.status(200).json({
-            success: true,
-            message: 'Product fetched successfully!',
-            data: result,
-        });
+        if (result) {
+            return res.status(200).json({
+                success: true,
+                message: 'Product fetched successfully!',
+                data: result,
+            });
+        }
+        else {
+            res.status(400).json({
+                success: false,
+                message: 'Product not found !',
+            });
+        }
     }
     catch (error) {
         res.status(400).json({
             success: false,
-            message: 'Product not found !',
+            message: 'Something went wrong!',
             error: error,
         });
     }
@@ -108,16 +116,24 @@ const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         const { productId } = req.params;
         const result = yield products_service_1.productService.deleteProductById(productId);
-        return res.status(200).json({
-            success: true,
-            message: 'Product deleted successfully!',
-            data: result,
-        });
+        if (result) {
+            return res.status(200).json({
+                success: true,
+                message: 'Product deleted successfully!',
+                data: result,
+            });
+        }
+        else {
+            res.status(400).json({
+                success: false,
+                message: 'Product not found !',
+            });
+        }
     }
     catch (error) {
         res.status(400).json({
             success: false,
-            message: 'Product not found !',
+            message: 'Product delete failed!',
             error: error,
         });
     }
